@@ -3,11 +3,11 @@ Implements sample projects to demo the [AvalonEdit](https://github.com/icsharpco
 
 # Demo Projects
 
-Obviously a fork.
+<font style="color:blue">Obviously a fork. from the Dirkster repo.</color>
 
 ## 00 MVVMDemo
 
-Changed / updated the sample to net8.0-windows and added gcode syntax highlighting definition.
+<font style="color:yellow">Changed / updated the sample to net8.0-windows and added gcode syntax highlighting definition.</color>
 
 The [00 MVVMDemo](https://github.com/Dirkster99/AvalonEdit-Samples/tree/master/source/00_MVVMDemo) project gives a simple MVVM/WPF demo application that implements some simple features like:
 1) Text loading
