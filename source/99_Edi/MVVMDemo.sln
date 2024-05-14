@@ -4,19 +4,19 @@ VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{09B8A3FE-A325-481A-BB1D-98682DBDBB90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AEDemo", "Apps\AEDemo\AEDemo.csproj", "{58BD0E02-6BFF-43F0-9B93-D3371E97794B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AEDemo", "Apps\AEDemo\AEDemo.csproj", "{58BD0E02-6BFF-43F0-9B93-D3371E97794B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditLib", "TextEditLib\TextEditLib.csproj", "{A4954411-B4DD-4BF4-8FCB-C99B8BD6A3A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextEditLib", "TextEditLib\TextEditLib.csproj", "{A4954411-B4DD-4BF4-8FCB-C99B8BD6A3A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{8F88015E-006B-478B-8652-329ABB5B5C5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsModel", "Components\Settings\SettingsModel\SettingsModel.csproj", "{9B0BA841-5A2F-4ED3-A908-253DBCA70E77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settings", "Components\Settings\Settings\Settings.csproj", "{2807B493-CC2E-402E-901A-EB138698FEDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Settings", "Components\Settings\Settings\Settings.csproj", "{2807B493-CC2E-402E-901A-EB138698FEDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThemedDemo", "Apps\ThemedDemo\ThemedDemo.csproj", "{D8ABBD3A-9459-44CF-9771-381A60DAD052}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThemedDemo", "Apps\ThemedDemo\ThemedDemo.csproj", "{D8ABBD3A-9459-44CF-9771-381A60DAD052}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLocator", "Components\ServiceLocator\ServiceLocator.csproj", "{252126D1-E1D9-49C3-910B-FCF2266265EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceLocator", "Components\ServiceLocator\ServiceLocator.csproj", "{252126D1-E1D9-49C3-910B-FCF2266265EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

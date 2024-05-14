@@ -1,4 +1,6 @@
-﻿namespace ThemedDemo
+﻿using System.Reflection;
+
+namespace ThemedDemo
 {
     using log4net;
     using log4net.Config;
@@ -29,8 +31,9 @@
         #region constructors
         static App()
         {
+            Logger = LogManager.GetLogger(Assembly.GetExecutingAssembly(), "default");
+
             XmlConfigurator.Configure();
-            Logger = LogManager.GetLogger("default");
 
             // Create service model to ensure available services
             ServiceInjector.InjectServices();
@@ -184,15 +187,14 @@
                 // Establish command binding to accept user input via commanding framework
                 // workSpace.InitCommandBinding(win);
 
-                ViewPosSizeModel viewSz;
                 settings.SessionData.WindowPosSz.TryGetValue(settings.SessionData.MainWindowName
-                                                           , out viewSz);
+                                                           , out var viewSz);
 
                 viewSz.SetWindowsState(win);
 
-                string lastActiveFile = settings.SessionData.LastActiveSolution;
+                var lastActiveFile = settings.SessionData.LastActiveSolution;
 
-                MainWindow mainWin = win as MainWindow;
+                var mainWin = win as MainWindow;
             }
             catch (Exception exp)
             {
@@ -209,7 +211,7 @@
         {
             try
             {
-                AppViewModel wsVM = base.MainWindow.DataContext as AppViewModel;
+                var wsVM = base.MainWindow.DataContext as AppViewModel;
 
                 if (wsVM != null)
                 {

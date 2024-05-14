@@ -10,7 +10,8 @@
 	xmlns:editCmd="clr-namespace:TextEditLib;assembly=TextEditLib"
 	xmlns:enums="clr-namespace:TextEditLib.Enums;assembly=TextEditLib"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:reskeys="clr-namespace:MLib.Themes;assembly=MLib"
+	xmlns:reskeys="clr-namespace:MLib.Themes;assembly=MLib" 
+	xmlns:viewModels="clr-namespace:ThemedDemo.ViewModels"
 	Title="MainWindow"
 	Width="525"
 	Height="350"
@@ -255,6 +256,9 @@
 				<avEditEx:TextEdit
 					Name="avEdit"
 					Column="{Binding SynchronizedColumn, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+
+					d:DataContext="{d:DesignInstance viewModels:AppViewModel}"
+
 					DataContext="{Binding DocumentRoot}"
 					Document="{Binding Document, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 					FontFamily="Consola"
