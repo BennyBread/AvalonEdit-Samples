@@ -1,5 +1,11 @@
+using System.Reflection;
+using System.Xml;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using ListeAdd;
+
 namespace AEDemo.ViewModels
 {
+    using AEDemo.ViewModels.Base;
     using ICSharpCode.AvalonEdit.Document;
     using ICSharpCode.AvalonEdit.Highlighting;
     using ICSharpCode.AvalonEdit.Utils;
@@ -7,7 +13,6 @@ namespace AEDemo.ViewModels
     using System.IO;
     using System.Text;
     using System.Windows.Input;
-    using AEDemo.ViewModels.Base;
 
     public class DocumentRootViewModel : Base.ViewModelBase
     {
@@ -30,6 +35,21 @@ namespace AEDemo.ViewModels
         public DocumentRootViewModel()
         {
             Document = new TextDocument();
+
+            IHighlightingDefinition customHighlighting;
+
+            var bytes = ResourceReader.GetBytes("AEDemo.GCode.xshd", Assembly.GetEntryAssembly());
+
+            using (Stream s = new MemoryStream(bytes))
+            using (XmlReader reader = new XmlTextReader(s))
+            {
+                customHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
+            }
+
+            HighlightingManager.Instance.RegisterHighlighting("GCode", [".nc"], customHighlighting);
+            
+            //textEditor.SyntaxHighlighting = customHighlighting;
+
         }
         #endregion ctors
 
@@ -119,7 +139,7 @@ namespace AEDemo.ViewModels
                 var hlManager = HighlightingManager.Instance;
 
                 if (hlManager != null)
-                  return hlManager.HighlightingDefinitions;
+                    return hlManager.HighlightingDefinitions;
 
                 return null;
             }
@@ -189,26 +209,24 @@ namespace AEDemo.ViewModels
                 var hlManager = HighlightingManager.Instance;
 
                 Document = new TextDocument();
-                string extension = System.IO.Path.GetExtension(paramFilePath);
+                var extension = Path.GetExtension(paramFilePath);
                 HighlightingDefinition = hlManager.GetDefinitionByExtension(extension);
 
                 IsDirty = false;
                 IsReadOnly = false;
 
                 // Check file attributes and set to read-only if file attributes indicate that
-                if ((System.IO.File.GetAttributes(paramFilePath) & FileAttributes.ReadOnly) != 0)
+                if ((File.GetAttributes(paramFilePath) & FileAttributes.ReadOnly) != 0)
                 {
                     IsReadOnly = true;
-                    IsReadOnlyReason = "This file cannot be edit because another process is currently writting to it.\n" +
+                    IsReadOnlyReason = "This file cannot be edit because another process is currently writing to it.\n" +
                                        "Change the file access permissions or save the file in a different location if you want to edit it.";
                 }
 
-                using (FileStream fs = new FileStream(paramFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var fs = new FileStream(paramFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var reader = FileReader.OpenStream(fs, Encoding.UTF8))
                 {
-                    using (StreamReader reader = FileReader.OpenStream(fs, Encoding.UTF8))
-                    {
-                        Document = new TextDocument(reader.ReadToEnd());
-                    }
+                    Document = new TextDocument(reader.ReadToEnd());
                 }
 
                 FilePath = paramFilePath;

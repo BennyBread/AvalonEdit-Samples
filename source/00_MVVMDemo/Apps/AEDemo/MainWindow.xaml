@@ -6,8 +6,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     
     xmlns:behav="clr-namespace:AEDemo.Behaviors"
-    xmlns:conv="clr-namespace:AEDemo.Converters"
-    
+    xmlns:conv="clr-namespace:AEDemo.Converters" 
+    xmlns:viewModels="clr-namespace:AEDemo.ViewModels"
+    d:DataContext="{d:DesignInstance viewModels:AppViewModel}"
     Title="MainWindow"
     Width="525"
     Height="350"
@@ -21,22 +22,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel
-            Grid.Row="0"
-            Margin="3"
-            Orientation="Horizontal">
-
-            <Button
-                Margin="3"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Stretch"
-                Command="{Binding OpenFileCommand}"
-                >
-                <Image
-                    Height="32"
-                    SnapsToDevicePixels="True"
-                    Source="{DynamicResource Image_OpenFile}" />
-            </Button>
+        <DockPanel Grid.Row="0" Margin="0" LastChildFill="True">
 
             <ToolBarTray
                 Grid.Row="1"
@@ -47,6 +33,17 @@
                     VerticalAlignment="Stretch"
                     SnapsToDevicePixels="True"
                     ToolBarTray.IsLocked="True">
+
+                    <Button
+                        Margin="3"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        Command="{Binding OpenFileCommand}"
+                    >
+                        <Image
+                            Height="24"
+                            SnapsToDevicePixels="True" Source="/Themes/Icons/OpenFile.ico" />
+                    </Button>
 
                     <!--
                         The bindings for Cut, Copy, Paste, Delete, Undo, Redo below work only in a Menu or Toolbar
@@ -62,9 +59,8 @@
                         SnapsToDevicePixels="True"
                         ToolTip="Copy">
                         <Image
-                            Height="32"
-                            SnapsToDevicePixels="True"
-                            Source="{DynamicResource Image_Copy}" />
+                            Height="24"
+                            SnapsToDevicePixels="True" Source="/Themes/Icons/Copy.ico" />
                     </Button>
                     <Button
                         Margin="3,0"
@@ -74,9 +70,8 @@
                         SnapsToDevicePixels="True"
                         ToolTip="Cut">
                         <Image
-                            Height="32"
-                            SnapsToDevicePixels="True"
-                            Source="{DynamicResource Image_Cut}" />
+                            Height="24"
+                            SnapsToDevicePixels="True" Source="/Themes/Icons/Cut.ico" />
                     </Button>
                     <Button
                         Margin="3,0"
@@ -86,7 +81,7 @@
                         SnapsToDevicePixels="True"
                         ToolTip="Paste">
                         <Image
-                            Height="32"
+                            Height="24"
                             SnapsToDevicePixels="True"
                             Source="{DynamicResource Image_Paste}" />
                     </Button>
@@ -98,7 +93,7 @@
                         SnapsToDevicePixels="True"
                         ToolTip="Delete">
                         <Image
-                            Height="32"
+                            Height="24"
                             SnapsToDevicePixels="True"
                             Source="{DynamicResource Image_Delete}" />
                     </Button>
@@ -112,7 +107,7 @@
                         SnapsToDevicePixels="True"
                         ToolTip="Undo">
                         <Image
-                            Height="32"
+                            Height="24"
                             SnapsToDevicePixels="True"
                             Source="{DynamicResource Image_Undo}" />
                     </Button>
@@ -124,85 +119,86 @@
                         SnapsToDevicePixels="True"
                         ToolTip="Redo">
                         <Image
-                            Height="32"
+                            Height="24"
                             SnapsToDevicePixels="True"
                             Source="{DynamicResource Image_Redo}" />
                     </Button>
 
-                    <ComboBox
+                    <!--<ComboBox
                         Grid.Column="1"
-                        MinWidth="50"
+                        MinWidth="150"
                         Margin="0,0,3,3"
                         DisplayMemberPath="Name"
                         behav:SelectionChangedCommand.ChangedCommand="{Binding DocumentRoot.HighlightingChangeCommand}"
                         ItemsSource="{Binding DocumentRoot.HighlightingDefinitions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                         SelectedItem="{Binding DocumentRoot.HighlightingDefinition, UpdateSourceTrigger=PropertyChanged}"
                         Visibility="{Binding DocumentRoot.HighlightingDefinition, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToVisibilityConverter}}"
-                    />
+                    />-->
                 </ToolBar>
             </ToolBarTray>
 
 
-        </StackPanel>
+        </DockPanel>
 
         <Grid
             Grid.Row="1"
             Grid.Column="0"
-            Grid.ColumnSpan="2"
             Margin="3">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <Grid
+            <Border BorderBrush="Blue" BorderThickness="3" CornerRadius="5">
+            <Grid Margin="2.5"
                 xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
                 xmlns:editing="clr-namespace:ICSharpCode.AvalonEdit.Editing;assembly=ICSharpCode.AvalonEdit"
-                xmlns:rendering="clr-namespace:ICSharpCode.AvalonEdit.Rendering;assembly=ICSharpCode.AvalonEdit"
-                Grid.Row="0">
+                xmlns:rendering="clr-namespace:ICSharpCode.AvalonEdit.Rendering;assembly=ICSharpCode.AvalonEdit">
+
+                <!--TextChanged="AvEditor_OnTextChanged"
+                DocumentChanged="AvEditor_OnDocumentChanged"-->
+
                 <avalonEdit:TextEditor
                     Name="avEditor"
-                    Background="White"
+                    d:DataContext="{d:DesignInstance viewModels:AppViewModel}"
                     DataContext="{Binding DocumentRoot}"
                     Document="{Binding Document, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                     Foreground="Black"
-                    IsModified="{Binding Path=IsDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    IsReadOnly="{Binding IsReadOnly, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    FontSize="16"
+                    ShowLineNumbers="True"
+                    IsModified="{Binding Path=DocumentRoot.IsDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    IsReadOnly="{Binding DocumentRoot.IsReadOnly, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                     LineNumbersForeground="Black"
                     SyntaxHighlighting="{Binding HighlightingDefinition, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                     <avalonEdit:TextEditor.ContextMenu>
                         <ContextMenu>
                             <MenuItem Command="Cut" Header="Cut">
-                                <!--MenuItem.Icon>
-                                <Image Source="/Edi;component/Images/App/Edit_Cut32.png" Height="16"/>
-                            </MenuItem.Icon-->
+                                <MenuItem.Icon>
+                                <Image Source="/Themes/Icons/Cut.ico" Height="16"/>
+                            </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Command="Copy" Header="Copy">
-                                <!--MenuItem.Icon>
-                                <Image Source="/Edi;component/Images/App/Edit_Copy32.png" Height="16"/>
-                            </MenuItem.Icon-->
+                                <MenuItem.Icon>
+                                <Image Source="/Themes/Icons/Copy.ico" Height="16"/>
+                            </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Command="Paste" Header="Paste">
-                                <!--MenuItem.Icon>
-                                <Image Source="/Edi;component/Images/App/Edit_Paste32.png" Height="16"/>
-                            </MenuItem.Icon-->
+                                <MenuItem.Icon>
+                                <Image Source="/Themes/Icons/Paste.ico" Height="16"/>
+                            </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Command="Delete" Header="Delete">
-                                <!--MenuItem.Icon>
-                                <Image Source="/Edi;component/Images/App/Edit_Delete32.png" Height="16"/>
-                                    </MenuItem.Icon-->
+                                <MenuItem.Icon>
+                                    <Image Source="/Themes/Icons/Delete.ico" Height="16"/>
+                                    </MenuItem.Icon>
                             </MenuItem>
 
                             <Separator />
 
                             <MenuItem Command="Undo" Header="Undo">
-                                <!--MenuItem.Icon>
-                                <Image Source="/Edi;component/Images/App/Edit_Undo32.png" Height="16"/>
-                                    </MenuItem.Icon-->
+                                <MenuItem.Icon>
+                                    <Image Source="/Themes/Icons/Undo.ico" Height="16"/>
+                                    </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Command="Redo" Header="Redo">
-                                <!--MenuItem.Icon>
-                                <Image Source="/Edi;component/Images/App/Edit_Redo32.png" Height="16"/>
-                                    </MenuItem.Icon-->
+                                <MenuItem.Icon>
+                                    <Image Source="/Themes/Icons/Redo.ico" Height="16"/>
+                                    </MenuItem.Icon>
                             </MenuItem>
                         </ContextMenu>
                     </avalonEdit:TextEditor.ContextMenu>
@@ -275,6 +271,7 @@
                     </avalonEdit:TextEditor.Template>
                 </avalonEdit:TextEditor>
             </Grid>
+            </Border>
         </Grid>
     </Grid>
 </Window>
