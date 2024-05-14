@@ -294,8 +294,7 @@
 		/// 
 		/// Method should not be called after <seealso cref="InitWithoutMainWindow"/>
 		/// </summary>
-		public void InitForMainWindow(IAppearanceManager appearance
-									  , string themeDisplayName)
+		public void InitForMainWindow(IAppearanceManager appearance, string themeDisplayName)
 		{
 			// Initialize base that does not require UI
 			InitWithoutMainWindow();
@@ -306,7 +305,7 @@
 			this.AppTheme.ApplyTheme(Application.Current.MainWindow, themeDisplayName);
 		}
 
-
+		#region IDisposable
 		/// <summary>
 		/// Standard dispose method of the <seealso cref="IDisposable" /> interface.
 		/// </summary>
@@ -339,6 +338,7 @@
 			//// base class's Dispose(Boolean) method
 			////base.Dispose(disposing);
 		}
+		#endregion
 
 		/// <summary>
 		/// Method is invoked when theme manager is asked
